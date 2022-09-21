@@ -33,6 +33,7 @@ function getTypesDescription(types) {
 function getPokemonDescription(pokemon) {
   let heightDescription = getHeightDescription(pokemon.height);
   let typesDescription = getTypesDescription(pokemon.types);
+  
   document.write(pokemon.name + ', ' + heightDescription + ', ' + typesDescription + '<br>');
 };
 
