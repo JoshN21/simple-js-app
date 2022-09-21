@@ -21,7 +21,7 @@ let pokemonRepository = (function () {
   };
 })();
 
-//forEach loop iterating over pokemonList, Function composition
+//getPokemonDescription function, prints pokemon name, height, types
 function getHeightDescription(height) {
   return height + 'ft.';
 };
@@ -33,8 +33,11 @@ function getTypesDescription(types) {
 function getPokemonDescription(pokemon) {
   let heightDescription = getHeightDescription(pokemon.height);
   let typesDescription = getTypesDescription(pokemon.types);
-  
+
   document.write(pokemon.name + ', ' + heightDescription + ', ' + typesDescription + '<br>');
 };
 
-pokemonList.forEach(getPokemonDescription);
+//getAll function, accesses pokemonRepository and runs getPokemonDescription function
+pokemonRepository.getAll().forEach(function (pokemon) {
+  return getPokemonDescription(pokemon);
+});
