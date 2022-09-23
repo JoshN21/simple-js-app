@@ -2,9 +2,9 @@
 let pokemonRepository = (function () {
 
   let pokemonList = [
-    {name: 'Bulbasaur', height: 2, types: ['grass', 'poison']},
-    {name: 'Ivysaur', height: 3, types: ['grass', 'poison']},
-    {name: 'Venusaur', height: 6, types: ['grass', 'poison']}
+    {name: "Bulbasaur", height: 2, types: ["grass", "poison"]},
+    {name: "Ivysaur", height: 3, types: ["grass", "poison"]},
+    {name: "Venusaur", height: 6, types: ["grass", "poison"]}
   ];
 
   function getAll() {
@@ -12,32 +12,40 @@ let pokemonRepository = (function () {
   };
 
   function add(pokemon) {
-    pokemonList.push(pokemon);
+    if (
+      typeof pokemon === "object" &&
+      "name" in pokemon &&
+      "height" in pokemon &&
+      "types" in pokemon
+    ) {
+      pokemonList.push(pokemon);
+    } else {
+      console.log("pokemon input is invalid");
+    }
+  };
+
+  function addListItem(pokemon) {
+    let pokemonList = document.querySelector(".pokemon-list");
+    let pokemonItem = document.createElement("li");
+    let button = document.createElement("button");
+    button.innerText = pokemon.name;
+    button.classList.add("button-class");
+    pokemonItem.appendChild(button);
+    pokemonList.appendChild(pokemonItem);
   };
 
   return {
     getAll: getAll,
-    add: add
+    add: add,
+    addListItem: addListItem
   };
 })();
 
-//getPokemonDescription function, prints pokemon name, height, types
-function getHeightDescription(height) {
-  return height + 'ft.';
-};
+//getAll function, accesses pokemonRepository and runs addListItem function
+// pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
 
-function getTypesDescription(types) {
-  return 'types: ' + types;
-};
+console.log(pokemonRepository.getAll());
 
-function getPokemonDescription(pokemon) {
-  let heightDescription = getHeightDescription(pokemon.height);
-  let typesDescription = getTypesDescription(pokemon.types);
-
-  document.write(pokemon.name + ', ' + heightDescription + ', ' + typesDescription + '<br>');
-};
-
-//getAll function, accesses pokemonRepository and runs getPokemonDescription function
 pokemonRepository.getAll().forEach(function (pokemon) {
-  return getPokemonDescription(pokemon);
+  pokemonRepository.addListItem(pokemon);
 });

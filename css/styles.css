@@ -1,0 +1,30 @@
+/* pokemonItem button */
+.button-class {
+  background-color: lightgray;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  padding: 20px 40px;
+  margin: 4px;
+  width: 200px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition-duration: 0.3s;
+}
+
+.button-class:hover,
+.button-class:focus {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+/* Pokedex heading */
+h1 {
+  margin: 40px auto 20px 44px;
+}
+
+/* unordered list */
+ul {
+  list-style-type: none;
+}
