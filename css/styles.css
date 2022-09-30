@@ -1,5 +1,5 @@
 /* pokemonItem button */
-.button-class {
+.pokemon-button {
   background-color: lightgray;
   border: none;
   border-radius: 5px;
@@ -13,8 +13,8 @@
   transition-duration: 0.3s;
 }
 
-.button-class:hover,
-.button-class:focus {
+.pokemon-button:hover,
+.pokemon-button:focus {
   cursor: pointer;
   opacity: 0.6;
 }

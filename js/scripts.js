@@ -11,6 +11,7 @@ let pokemonRepository = (function () {
     return pokemonList;
   };
 
+// function for adding pokemon to the list, example: pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
   function add(pokemon) {
     if (
       typeof pokemon === "object" &&
@@ -24,28 +25,35 @@ let pokemonRepository = (function () {
     }
   };
 
-  function addListItem(pokemon) {
+  //function shows pokemons's additional info when clicked
+  function showDetails(pokemon) {
+    console.log(pokemon);
+  };
+
+  //function displays each pokemon on page as a button
+  function displayListItem(pokemon) {
     let pokemonList = document.querySelector(".pokemon-list");
     let pokemonItem = document.createElement("li");
     let button = document.createElement("button");
     button.innerText = pokemon.name;
-    button.classList.add("button-class");
+    button.classList.add("pokemon-button");
     pokemonItem.appendChild(button);
     pokemonList.appendChild(pokemonItem);
+    // event handler runs showDetails function when a pokemon is clicked, use 'event' in function
+    button.addEventListener('click', function (event) {
+      showDetails(pokemon);
+    });
   };
 
   return {
     getAll: getAll,
     add: add,
-    addListItem: addListItem
+    displayListItem: displayListItem,
+    showDetails: showDetails
   };
 })();
 
-//getAll function, accesses pokemonRepository and runs addListItem function
-// pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
-
-console.log(pokemonRepository.getAll());
-
+//getAll function, accesses pokemonRepository and runs displayListItem function
 pokemonRepository.getAll().forEach(function (pokemon) {
-  pokemonRepository.addListItem(pokemon);
+  pokemonRepository.displayListItem(pokemon);
 });
