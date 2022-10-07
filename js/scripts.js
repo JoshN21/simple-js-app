@@ -4,7 +4,17 @@ let pokemonRepository = (function () {
   let pokemonList = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
-// function for adding pokemon to the list, example: pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
+  let loadingSpinner = document.querySelector(".loading-spinner");
+
+  let showLoadingSpinner = function () {
+    loadingSpinner.classList.add("loading-spinner");
+  };
+
+  let hideLoadingSpinner = function () {
+    loadingSpinner.classList.remove("loading-spinner");
+  };
+
+  //ADD function for adding pokemon to the list, example: pokemonRepository.add({ name: "Pikachu", height: 0.3, types: ["electric"] });
   function add(pokemon) {
     if (
       typeof pokemon === "object" &&
@@ -17,12 +27,12 @@ let pokemonRepository = (function () {
     }
   };
 
-//function for returning entire pokemonList
+  //GET ALL function, for returning entire pokemonList
   function getAll() {
     return pokemonList;
   };
 
-  //function displays each pokemon on page as a button, and listens for a click to run showDetails
+  //DISPLAY LIST ITEM function, displays each pokemon on page as a button, and listens for a click to run showDetails
   function displayListItem(pokemon) {
     let pokemonList = document.querySelector(".pokemon-list");
     let pokemonItem = document.createElement("li");
@@ -37,9 +47,11 @@ let pokemonRepository = (function () {
     });
   };
 
-//loadList function, uses fetch to get pokemon data from pokeapi, then uses add function to add to pokemonList
+  //LOAD LIST function, uses fetch to get pokemon data from pokeapi, then uses add function to add to pokemonList
   function loadList() {
+    showLoadingSpinner();
     return fetch(apiUrl).then(function (response) {
+      hideLoadingSpinner();
       return response.json();
     }).then(function (json) {
       json.results.forEach(function (item) {
@@ -50,25 +62,29 @@ let pokemonRepository = (function () {
         add(pokemon);
       });
     }).catch(function (error) {
+      hideLoadingSpinner();
       console.log(error);
     });
   };
 
-  //loadDetails function, fetches Pokemon details using URL, returns JSON response, assigns some of the details to the Pokemon
+  //LOAD DETAILS function, fetches Pokemon details using URL, returns JSON response, assigns some of the details to the Pokemon
   function loadDetails(item) {
+    showLoadingSpinner();
     let url = item.deatilsUrl;
     return fetch(url).then(function (response) {
+      hideLoadingSpinner();
       return response.json();
     }).then(function (details) {
       item.imageUrl = details.sprites.front_default; //found in API
       item.height = details.height;
       item.types = details.types;
     }).catch(function (error) {
+      hideLoadingSpinner();
       console.log(error);
     });
   };
 
-  //Show details function, loadDetails for the pokemon clicked, then prints those(details to load defined in loadDetails function) to the console
+  //SHOW DETAILS function, executes loadDetails for the pokemon clicked, then prints those(details to load defined in loadDetails function) to the console
   function showDetails(pokemon) {
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
